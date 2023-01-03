@@ -11,7 +11,6 @@ public class PlayerTouchAction : MonoBehaviour
     [SerializeField] private FloatingJoystick joystick;
     [SerializeField] private NavMeshAgent player;
     [SerializeField] private PlayerAnimations playerAnim;
-    [SerializeField] private float lookAtSensitivity = 2.0f;
 
     private bool isShooting = false;
 
@@ -118,7 +117,7 @@ public class PlayerTouchAction : MonoBehaviour
             movementAmount.y
         );
 
-        player.transform.LookAt(player.transform.position + scaledMovement * lookAtSensitivity, Vector3.up);
+        player.transform.LookAt(player.transform.position + scaledMovement, Vector3.up);
     }
 
     private void OnGUI()

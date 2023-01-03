@@ -11,7 +11,8 @@ public class PlayerAnimations : MonoBehaviour
         IdleShoot,
         Walk,
         WalkShoot,
-        Reload
+        Reload,
+        Death
     }
 
     private readonly string SpeedFloat = "Speed_f";
@@ -21,6 +22,7 @@ public class PlayerAnimations : MonoBehaviour
     private readonly string FullAutoBool = "FullAuto_b";
     private readonly string ShootBool = "Shoot_b";
     private readonly string ReloadBool = "Reload_b";
+    private readonly string DeathBool = "Death_b";
 
     [SerializeField] private Animator animController;
     [SerializeField] private AnimState animState;
@@ -30,7 +32,7 @@ public class PlayerAnimations : MonoBehaviour
         if (this.animState == AnimState.Reload && !force) return;
 
         this.animState = animState;
-        switch (animState)
+        switch (this.animState)
         {
             case AnimState.Idle:
                 SetToIdle();
@@ -46,6 +48,9 @@ public class PlayerAnimations : MonoBehaviour
                 break;
             case AnimState.Reload:
                 SetToReloadBullet();
+                break;
+            case AnimState.Death:
+                SetToDeath();
                 break;
         }
     }
@@ -95,5 +100,10 @@ public class PlayerAnimations : MonoBehaviour
     {
         animController.SetInteger(WeaponTypeInt, 4);
         animController.SetBool(ReloadBool, true);
+    }
+
+    private void SetToDeath()
+    {
+        animController.SetBool(DeathBool, true);
     }
 }

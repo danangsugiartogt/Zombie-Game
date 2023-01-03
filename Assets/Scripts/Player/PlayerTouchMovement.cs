@@ -12,7 +12,6 @@ public class PlayerTouchMovement : MonoBehaviour
     [SerializeField] private FloatingJoystick joystick;
     [SerializeField] private NavMeshAgent player;
     [SerializeField] private PlayerAnimations playerAnim;
-    [SerializeField] private float lookAtSensitivity = 2.0f;
 
     private bool isWalking = false;
 
@@ -35,16 +34,6 @@ public class PlayerTouchMovement : MonoBehaviour
         ETouch.Touch.onFingerUp -= HandleLoseFinger;
         ETouch.Touch.onFingerMove -= HandleFingerMove;
         EnhancedTouchSupport.Disable();
-    }
-
-    private void Start()
-    {
-        Init();
-    }
-
-    public void Init()
-    {
-        playerAnim.SetAnimState(PlayerAnimations.AnimState.Idle);
     }
 
     private void HandleFingerMove(Finger movedFinger)
@@ -131,7 +120,7 @@ public class PlayerTouchMovement : MonoBehaviour
         );
 
         if (!playerTouchAction.IsShooting)
-            player.transform.LookAt(player.transform.position + scaledMovement * lookAtSensitivity, Vector3.up);
+            player.transform.LookAt(player.transform.position + scaledMovement, Vector3.up);
 
         player.Move(scaledMovement);
     }
