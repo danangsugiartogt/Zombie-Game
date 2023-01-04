@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NormalZombie : Enemy
 {
-    protected override void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
 
@@ -17,6 +17,11 @@ public class NormalZombie : Enemy
         {
             hp = hpList[0];
         }
+    }
+
+    public void AddHp(int value)
+    {
+        hp += value;
     }
 
     protected override void OnTriggerEnter(Collider collider)

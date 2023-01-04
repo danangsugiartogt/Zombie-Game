@@ -10,7 +10,7 @@ public class BossZombie : Enemy
 
     private int indexForm = 0;
 
-    protected override void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         SetBossForm();

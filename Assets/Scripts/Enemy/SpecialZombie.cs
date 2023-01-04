@@ -11,7 +11,7 @@ public class SpecialZombie : Enemy
 
     private bool isDeath = false;
 
-    protected override void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         hp = hpList[0];

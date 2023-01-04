@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,27 +18,34 @@ public class Enemy : MonoBehaviour
     }
 
     [SerializeField] protected Type type;
-    //[SerializeField] private EnemyProperties enemyProperty;
-
     [SerializeField] protected float attackRange;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected int[] hpList;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected bool isDebug = true;
     protected int hp;
+
+    protected Action onDestroy;
 
     public int HP => hp;
     public Type EnemyType => type;
 
     private Transform target;
 
+    protected virtual void OnDestroy()
+    {
+        onDestroy?.Invoke();
+    }
+
     protected virtual void Start()
     {
         Initialize();
     }
 
-    protected virtual void Initialize()
+    public virtual void Initialize()
     {
         target = FindObjectOfType<PlayerTouchMovement>().transform;
+        agent.speed = moveSpeed;
     }
 
     protected virtual void Update()
@@ -67,31 +75,33 @@ public class Enemy : MonoBehaviour
         switch (collider.gameObject.tag)
         {
             case "Player":
-                Debug.Log("collision with player");
-                break;
-            case "explosion":
-                Debug.Log("collision with explosion");
+                if(isDebug) Destroy(gameObject); // debug
                 break;
         }
     }
 
     public virtual void TakeHeadDamage()
     {
-        Debug.Log("TakeHeadDamage");
+
     }
 
     public virtual void TakeBodyDamage()
     {
-        Debug.Log("TakeBodyDamage");
+
     }
 
     protected virtual void CheckLives()
     {
-        Debug.Log("CheckLives");
+
     }
 
     protected virtual void OnDeath()
     {
         Debug.Log("OnDeath");
+    }
+
+    public virtual void SetOnDestroyEvent(Action onDestroy)
+    {
+        this.onDestroy = onDestroy;
     }
 }
