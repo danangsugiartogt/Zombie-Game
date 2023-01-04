@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected int[] hpList;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected Text text;
     [SerializeField] protected bool isDebug = true;
     protected int hp;
 
@@ -31,6 +33,16 @@ public class Enemy : MonoBehaviour
     public Type EnemyType => type;
 
     private Transform target;
+
+    protected void OnEnable()
+    {
+        CameraEvent.OnSwitch += OnCameraSwitch;
+    }
+
+    protected void OnDisable()
+    {
+        CameraEvent.OnSwitch -= OnCameraSwitch;
+    }
 
     protected virtual void OnDestroy()
     {
@@ -46,6 +58,18 @@ public class Enemy : MonoBehaviour
     {
         target = FindObjectOfType<PlayerTouchMovement>().transform;
         agent.speed = moveSpeed;
+    }
+
+    protected virtual void OnCameraSwitch(bool isThirdPerson)
+    {
+        var rect = text.GetComponent<RectTransform>();
+
+        if (rect == null) return;
+
+        if (isThirdPerson)
+            rect.localRotation = Quaternion.Euler(new Vector3(0, rect.localRotation.y, 0));
+        else
+            rect.localRotation = Quaternion.Euler(new Vector3(EnemyType == Type.Boss ? -90 : 90, rect.localRotation.y, 0));
     }
 
     protected virtual void Update()
@@ -80,14 +104,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected virtual void SetText()
+    {
+        text.text = $"Hp: {hp}";
+    }
+
     public virtual void TakeHeadDamage()
     {
-
+        SetText();
     }
 
     public virtual void TakeBodyDamage()
     {
-
+        SetText();
     }
 
     protected virtual void CheckLives()
@@ -97,7 +126,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnDeath()
     {
-        Debug.Log("OnDeath");
+
     }
 
     public virtual void SetOnDestroyEvent(Action onDestroy)

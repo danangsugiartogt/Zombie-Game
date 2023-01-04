@@ -261,4 +261,20 @@ public class GameController : MonoBehaviour
 
         return zombieObj;
     }
+
+    void OnGUI()
+    {
+        GUIStyle labelStyle = new GUIStyle()
+        {
+            fontSize = 24,
+            normal = new GUIStyleState()
+            {
+                textColor = Color.white
+            }
+        };
+
+        GUI.Label(new Rect(10, 140, 200, 20), $"Waves: {waveIndex + 1}", labelStyle);
+        GUI.Label(new Rect(10, 170, 200, 20), $"Active Zombies: {spawnnedZombieList.Count}", labelStyle);
+        GUI.Label(new Rect(10, 200, 200, 20), $"Total Zombie Killed: {zombieDeathCount}", labelStyle);
+    }
 }

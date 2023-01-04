@@ -17,24 +17,23 @@ public class SpecialZombie : Enemy
         hp = hpList[0];
 
         agent.speed = moveSpeed;
+        SetText();
     }
 
     public override void TakeHeadDamage()
     {
-        base.TakeHeadDamage();
-
         hp -= BodyDamage * 2;
-
         CheckLives();
+
+        base.TakeHeadDamage();
     }
 
     public override void TakeBodyDamage()
     {
-        base.TakeBodyDamage();
-        Debug.Log("SP Zombie");
         hp -= BodyDamage;
-
         CheckLives();
+
+        base.TakeBodyDamage();
     }
 
     protected override void CheckLives()

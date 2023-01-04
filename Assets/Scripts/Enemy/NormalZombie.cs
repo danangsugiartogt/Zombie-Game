@@ -38,20 +38,19 @@ public class NormalZombie : Enemy
 
     public override void TakeHeadDamage()
     {
+        hp -= BodyDamage * 2;
+        CheckLives();
+
         base.TakeHeadDamage();
 
-        hp -= BodyDamage * 2;
-
-        CheckLives();
     }
 
     public override void TakeBodyDamage()
     {
-        base.TakeBodyDamage();
-
         hp -= BodyDamage;
-
         CheckLives();
+
+        base.TakeBodyDamage();
     }
 
     protected override void CheckLives()

@@ -72,12 +72,6 @@ public class PlayerAnimations : MonoBehaviour
         animController.SetInteger(WeaponTypeInt, 5);
     }
 
-    private void SetToAimIdle()
-    {
-        animController.SetFloat(SpeedFloat, 0);
-        animController.SetInteger(WeaponTypeInt, 5);
-    }
-
     private void SetToIdleShoot()
     {
         //animController.SetFloat(HeadHorizontalFloat, -.2f);

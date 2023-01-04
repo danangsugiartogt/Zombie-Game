@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
 
     private void SubstractLives()
     {
+        if (lives <= 0) return;
+
         lives--;
         
         if(lives <= 0)
@@ -56,6 +58,9 @@ public class Player : MonoBehaviour
             playerAnim.SetAnimState(PlayerAnimations.AnimState.Death, true);
             playerMovement.enabled = false;
             playerAction.enabled = false;
+
+            playerMovement.EnableJoystick(false);
+            playerAction.EnableJoystick(false);
         }
     }
 
@@ -63,5 +68,20 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
         isCollideWithEnemy = false;
+    }
+
+    void OnGUI()
+    {
+        GUIStyle labelStyle = new GUIStyle()
+        {
+            fontSize = 24,
+            normal = new GUIStyleState()
+            {
+                textColor = Color.white
+            }
+        };
+
+        GUI.Label(new Rect(10, 50, 200, 20), $"Lives: {lives}", labelStyle);
+        GUI.Label(new Rect(Screen.width / 2, 10, 200, 20), lives <= 0 ? "Game Over" : "", labelStyle);
     }
 }

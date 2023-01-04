@@ -30,20 +30,18 @@ public class BossZombie : Enemy
 
     public override void TakeHeadDamage()
     {
-        base.TakeHeadDamage();
-
         hp -= BodyDamage * 2;
-
         CheckLives();
+
+        base.TakeHeadDamage();
     }
 
     public override void TakeBodyDamage()
     {
-        base.TakeBodyDamage();
-
         hp -= BodyDamage;
-
         CheckLives();
+
+        base.TakeBodyDamage();
     }
 
     protected override void CheckLives()
@@ -62,7 +60,6 @@ public class BossZombie : Enemy
         {
             indexForm++;
             SetBossForm();
-            Debug.Log("Boss Death " + indexForm);
         }
         else
         {

@@ -35,6 +35,11 @@ public class PlayerTouchAction : MonoBehaviour
         EnhancedTouchSupport.Disable();
     }
 
+    public void EnableJoystick(bool isEnabled)
+    {
+        joystick.gameObject.SetActive(isEnabled);
+    }
+
     private void HandleFingerMove(Finger movedFinger)
     {
         if (movedFinger == movementFinger)
@@ -87,6 +92,7 @@ public class PlayerTouchAction : MonoBehaviour
             joystick.gameObject.SetActive(true);
             joystick.RectTransform.sizeDelta = joystickSize;
             joystick.RectTransform.anchoredPosition = ClampStartPosition(touchedFinger.screenPosition);
+            playerAnim.SetAnimState(PlayerAnimations.AnimState.IdleShoot);
         }
     }
 
@@ -118,26 +124,5 @@ public class PlayerTouchAction : MonoBehaviour
         );
 
         player.transform.LookAt(player.transform.position + scaledMovement, Vector3.up);
-    }
-
-    private void OnGUI()
-    {
-        GUIStyle labelStyle = new GUIStyle()
-        {
-            fontSize = 24,
-            normal = new GUIStyleState()
-            {
-                textColor = Color.white
-            }
-        };
-        if (movementFinger != null)
-        {
-            GUI.Label(new Rect(10, 95, 500, 20), $"Finger Start Position: {movementFinger.currentTouch.startScreenPosition}", labelStyle);
-            GUI.Label(new Rect(10, 135, 500, 20), $"Finger Current Position: {movementFinger.currentTouch.screenPosition}", labelStyle);
-        }
-        else
-        {
-            GUI.Label(new Rect(10, 95, 500, 20), "No Current Movement Touch", labelStyle);
-        }
     }
 }

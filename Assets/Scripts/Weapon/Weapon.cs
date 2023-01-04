@@ -52,4 +52,18 @@ public class Weapon : MonoBehaviour
         playerAnim.SetAnimState(PlayerAnimations.AnimState.Idle, true);
         isReloading = false;
     }
+
+    void OnGUI()
+    {
+        GUIStyle labelStyle = new GUIStyle()
+        {
+            fontSize = 24,
+            normal = new GUIStyleState()
+            {
+                textColor = Color.white
+            }
+        };
+
+        GUI.Label(new Rect(10, 80, 200, 20), $"Ammo: {remainingBullet}", labelStyle);
+    }
 }
